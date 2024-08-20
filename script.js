@@ -44,5 +44,55 @@ async function fetchRSS(feed) {
 function loadAllFeeds() {
     FEEDS.forEach(feed => fetchRSS(feed));
 }
+// User Links Functionality
+const userLinksContainer = document.getElementById('user-links-container');
+const addLinkForm = document.getElementById('add-link-form');
 
-loadAllFeeds();
+function loadUserLinks() {
+    const links = JSON.parse(localStorage.getItem('userLinks')) || [];
+    userLinksContainer.innerHTML = '';
+    links.forEach(link => addLinkToDOM(link));
+}
+
+function saveLinkToStorage(link) {
+    const links = JSON.parse(localStorage.getItem('userLinks')) || [];
+    links.push(link);
+    localStorage.setItem('userLinks', JSON.stringify(links));
+}
+
+function removeLinkFromStorage(url) {
+    let links = JSON.parse(localStorage.getItem('userLinks')) || [];
+    links = links.filter(link => link.url !== url);
+    localStorage.setItem('userLinks', JSON.stringify(links));
+}
+
+function addLinkToDOM(link) {
+    const linkElement = document.createElement('a');
+    linkElement.href = link.url;
+    linkElement.className = 'user-link';
+    linkElement.target = '_blank';
+    linkElement.innerHTML = `
+        <img src="https://www.google.com/s2/favicons?domain=${link.url}" alt="${link.name} favicon">
+        ${link.name}
+        <span class="remove-link" data-url="${link.url}">&times;</span>
+    `;
+    userLinksContainer.appendChild(linkElement);
+}
+
+addLinkForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const url = document.getElementById('link-url').value;
+    const name = document.getElementById('link-name').value || new URL(url).hostname;
+    const link = { url, name };
+    saveLinkToStorage(link);
+    addLinkToDOM(link);
+    addLinkForm.reset();
+});
+
+userLinksContainer.addEventListener('click', function(e) {
+    if (e.target.classList.contains('remove-link')) {
+        const url = e.target.getAttribute('data-url');
+        removeLinkFromStorage(url);
+        e.target.parentElement.remove();
+    }
+});loadAllFeeds();
