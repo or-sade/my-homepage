@@ -19,13 +19,24 @@
             <div id="themarker-feed-container">
                 <h3>TheMarker News</h3>
             </div>
-        </section>
-        <section id="links">
-            <h2>Favorite Links</h2>
-            <!-- Your links here -->
+ </section>
+        <section id="user-links">
+            <h2>My Quick Links</h2>
+            <form id="add-link-form">
+                <input type="url" id="link-url" placeholder="Enter website URL" required>
+                <input type="text" id="link-name" placeholder="Enter link name">
+                <button type="submit">Add Link</button>
+            </form>
+            <div id="user-links-container"></div>
         </section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
+
+
+
+
+
+
