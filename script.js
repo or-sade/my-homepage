@@ -2,12 +2,12 @@ const RSS2JSON_API_KEY = '7n1uklfxhkamh6ssioxneaowvsmgc251oj5sd1ol'; // Make sur
 
 const FEEDS = [
     {
-        name: 'Globes',
+        name: 'MyGlobes',
         url: 'https://www.globes.co.il/webservice/rss/rssfeeder.asmx/FeederNode?iID=585',
         containerId: 'globes-feed-container'
     },
     {
-        name: 'TheMarker',
+        name: 'MyTheMarker',
         url: 'https://www.themarker.com/cmlink/1.145',
         containerId: 'themarker-feed-container'
     }
