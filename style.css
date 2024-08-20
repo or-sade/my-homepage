@@ -17,14 +17,18 @@ main {
 #news-feed, #links {
     width: 48%;
 }
+#globes-feed-container, #themarker-feed-container {
+    margin-bottom: 20px;
+}
 .feed-item {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     margin-bottom: 10px;
     padding: 10px;
 }
-.feed-item h3 {
+.feed-item h4 {
     margin-top: 0;
+    margin-bottom: 5px;
 }
 .feed-item a {
     color: #333;
@@ -32,4 +36,9 @@ main {
 }
 .feed-item a:hover {
     text-decoration: underline;
+}
+.feed-item p {
+    margin: 0;
+    font-size: 0.8em;
+    color: #666;
 }
