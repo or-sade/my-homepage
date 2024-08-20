@@ -1,13 +1,14 @@
+// RSS Feed Code (Keep this part from your original script)
 const RSS2JSON_API_KEY = '7n1uklfxhkamh6ssioxneaowvsmgc251oj5sd1ol'; // Make sure this is your actual API key
 
 const FEEDS = [
     {
-        name: 'MyGlobes',
+        name: 'Globes',
         url: 'https://www.globes.co.il/webservice/rss/rssfeeder.asmx/FeederNode?iID=585',
         containerId: 'globes-feed-container'
     },
     {
-        name: 'MyTheMarker',
+        name: 'TheMarker',
         url: 'https://www.themarker.com/cmlink/1.145',
         containerId: 'themarker-feed-container'
     }
@@ -44,29 +45,13 @@ async function fetchRSS(feed) {
 function loadAllFeeds() {
     FEEDS.forEach(feed => fetchRSS(feed));
 }
-// User Links Functionality
+
+// New User Links Functionality
 const userLinksContainer = document.getElementById('user-links-container');
 const addLinkForm = document.getElementById('add-link-form');
 
-function loadUserLinks() {
-    const links = JSON.parse(localStorage.getItem('userLinks')) || [];
-    userLinksContainer.innerHTML = '';
-    links.forEach(link => addLinkToDOM(link));
-}
-
-function saveLinkToStorage(link) {
-    const links = JSON.parse(localStorage.getItem('userLinks')) || [];
-    links.push(link);
-    localStorage.setItem('userLinks', JSON.stringify(links));
-}
-
-function removeLinkFromStorage(url) {
-    let links = JSON.parse(localStorage.getItem('userLinks')) || [];
-    links = links.filter(link => link.url !== url);
-    localStorage.setItem('userLinks', JSON.stringify(links));
-}
-
 function addLinkToDOM(link) {
+    console.log('Adding link to DOM:', link);
     const linkElement = document.createElement('a');
     linkElement.href = link.url;
     linkElement.className = 'user-link';
@@ -77,22 +62,21 @@ function addLinkToDOM(link) {
         <span class="remove-link" data-url="${link.url}">&times;</span>
     `;
     userLinksContainer.appendChild(linkElement);
+    console.log('Link added to DOM');
 }
 
 addLinkForm.addEventListener('submit', function(e) {
     e.preventDefault();
+    console.log('Form submitted');
     const url = document.getElementById('link-url').value;
     const name = document.getElementById('link-name').value || new URL(url).hostname;
+    console.log('URL:', url, 'Name:', name);
     const link = { url, name };
-    saveLinkToStorage(link);
     addLinkToDOM(link);
     addLinkForm.reset();
 });
 
-userLinksContainer.addEventListener('click', function(e) {
-    if (e.target.classList.contains('remove-link')) {
-        const url = e.target.getAttribute('data-url');
-        removeLinkFromStorage(url);
-        e.target.parentElement.remove();
-    }
-});loadAllFeeds();
+console.log('Script loaded');
+
+// Load feeds when the script runs
+loadAllFeeds();
