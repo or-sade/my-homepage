@@ -1,4 +1,4 @@
-const RSS2JSON_API_KEY = 'YOUR_API_KEY'; // Make sure this is your actual API key
+const RSS2JSON_API_KEY = '7n1uklfxhkamh6ssioxneaowvsmgc251oj5sd1ol'; // Make sure this is your actual API key
 
 const FEEDS = [
     {
