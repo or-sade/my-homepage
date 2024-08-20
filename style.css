@@ -17,16 +17,19 @@ main {
 #news-feed, #links {
     width: 48%;
 }
-.post {
+.feed-item {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     margin-bottom: 10px;
     padding: 10px;
 }
-#links ul {
-    list-style-type: none;
-    padding: 0;
+.feed-item h3 {
+    margin-top: 0;
 }
-#links li {
-    margin-bottom: 5px;
+.feed-item a {
+    color: #333;
+    text-decoration: none;
+}
+.feed-item a:hover {
+    text-decoration: underline;
 }
