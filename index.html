@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Homepage</title>
+    <title>My Personal Homepage</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Welcome to My Homepage</h1>
+        <h1>Welcome to My Personal Homepage</h1>
+        <div id="auth-section">
+            <form id="login-form" style="display:none;">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <button id="logout-btn" style="display:none;">Logout</button>
+        </div>
     </header>
     <main>
         <section id="news-feed">
-            <h2>News Feeds</h2>
-            <div id="globes-feed-container">
-                <h3>Globes News</h3>
-            </div>
-            <div id="themarker-feed-container">
-                <h3>TheMarker News</h3>
-            </div>
- </section>
-        <section id="user-links">
+            <!-- Existing news feed code -->
+        </section>
+        <section id="user-links" style="display:none;">
             <h2>My Quick Links</h2>
             <form id="add-link-form">
                 <input type="url" id="link-url" placeholder="Enter website URL" required>
@@ -34,9 +36,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
