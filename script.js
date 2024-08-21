@@ -78,5 +78,104 @@ addLinkForm.addEventListener('submit', function(e) {
 
 console.log('Script loaded');
 
+// User Authentication and Links Management
+const loginForm = document.getElementById('login-form');
+const logoutBtn = document.getElementById('logout-btn');
+const userLinksSection = document.getElementById('user-links');
+const userLinksContainer = document.getElementById('user-links-container');
+const addLinkForm = document.getElementById('add-link-form');
+
+let currentUser = null;
+
+function showLoginForm() {
+    loginForm.style.display = 'inline-block';
+    logoutBtn.style.display = 'none';
+    userLinksSection.style.display = 'none';
+}
+
+function showUserSection() {
+    loginForm.style.display = 'none';
+    logoutBtn.style.display = 'inline-block';
+    userLinksSection.style.display = 'block';
+}
+
+function login(username, password) {
+    // In a real app, you'd validate against a server here
+    currentUser = username;
+    localStorage.setItem('currentUser', username);
+    showUserSection();
+    loadUserLinks();
+}
+
+function logout() {
+    currentUser = null;
+    localStorage.removeItem('currentUser');
+    showLoginForm();
+    userLinksContainer.innerHTML = '';
+}
+
+function loadUserLinks() {
+    const links = JSON.parse(localStorage.getItem(`${currentUser}_links`)) || [];
+    userLinksContainer.innerHTML = '';
+    links.forEach(link => addLinkToDOM(link));
+}
+
+function saveLinkToStorage(link) {
+    const links = JSON.parse(localStorage.getItem(`${currentUser}_links`)) || [];
+    links.push(link);
+    localStorage.setItem(`${currentUser}_links`, JSON.stringify(links));
+}
+
+function addLinkToDOM(link) {
+    const linkElement = document.createElement('a');
+    linkElement.href = link.url;
+    linkElement.className = 'user-link';
+    linkElement.target = '_blank';
+    linkElement.innerHTML = `
+        <img src="https://www.google.com/s2/favicons?domain=${link.url}" alt="${link.name} favicon">
+        ${link.name}
+        <span class="remove-link" data-url="${link.url}">&times;</span>
+    `;
+    userLinksContainer.appendChild(linkElement);
+}
+
+loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    login(username, password);
+    loginForm.reset();
+});
+
+logoutBtn.addEventListener('click', logout);
+
+addLinkForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const url = document.getElementById('link-url').value;
+    const name = document.getElementById('link-name').value || new URL(url).hostname;
+    const link = { url, name };
+    saveLinkToStorage(link);
+    addLinkToDOM(link);
+    addLinkForm.reset();
+});
+
+userLinksContainer.addEventListener('click', function(e) {
+    if (e.target.classList.contains('remove-link')) {
+        const url = e.target.getAttribute('data-url');
+        const links = JSON.parse(localStorage.getItem(`${currentUser}_links`)) || [];
+        const updatedLinks = links.filter(link => link.url !== url);
+        localStorage.setItem(`${currentUser}_links`, JSON.stringify(updatedLinks));
+        e.target.parentElement.remove();
+    }
+});
+
+// Check if user is already logged in
+if (localStorage.getItem('currentUser')) {
+    currentUser = localStorage.getItem('currentUser');
+    showUserSection();
+    loadUserLinks();
+} else {
+    showLoginForm();
+}
 // Load feeds when the script runs
 loadAllFeeds();
