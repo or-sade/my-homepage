@@ -92,3 +92,16 @@ main {
 .remove-link:hover {
     color: #f00;
 }
+#auth-section {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+#login-form input, #login-form button, #logout-btn {
+    padding: 5px 10px;
+    margin-left: 10px;
+}
+
+#user-links {
+    margin-top: 20px;
+}
